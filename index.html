@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Vercel Scaling Demo — Static HTML</title>
+  <style>
+    body { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+           display:flex; align-items:center; justify-content:center;
+           min-height:100vh; margin:0; background:linear-gradient(135deg,#eef2ff,#fff);}
+    .card { background:white; padding:24px; border-radius:12px; box-shadow:0 6px 20px rgba(20,20,50,0.08);
+           max-width:720px; width:90%; text-align:center; }
+    h1 { margin:0 0 8px; font-size:1.6rem; }
+    p { margin:6px 0; color:#333; }
+    .time { font-weight:600; margin-top:12px; }
+    .heavy { margin-top:18px; font-size:0.9rem; color:#666; }
+    button { margin-top:12px; padding:10px 14px; border-radius:8px; border:0; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Vercel Scaling Demo — Static HTML</h1>
+    <p>Halaman statis sederhana yang dilayani oleh CDN Vercel.</p>
+    <div id="time" class="time">Waktu server: —</div>
+
+    <p class="heavy">
+      Tombol berikut menambahkan elemen DOM berat (gambar besar) untuk contoh ukuran payload, bukan CPU server.
+    </p>
+    <button id="add">Tambah konten berat</button>
+    <div id="heavy-area"></div>
+
+    <p style="margin-top:18px;color:#444;font-size:0.9rem;">
+      URL halaman ini akan menjadi: <code>/</code> (root).
+    </p>
+  </div>
+
+  <script>
+    // tampilkan waktu client (karena ini statis, tidak ada 'server time' dinamis)
+    function updateTime() {
+      document.getElementById('time').textContent = 'Waktu client: ' + new Date().toISOString();
+    }
+    updateTime();
+    setInterval(updateTime, 1000);
+
+    // tombol untuk menambahkan "payload" (gambar besar) ke halaman
+    document.getElementById('add').addEventListener('click', () => {
+      const area = document.getElementById('heavy-area');
+      for(let i=0;i<3;i++){
+        const img = document.createElement('img');
+        img.src = 'https://picsum.photos/1200/800?random=' + Math.floor(Math.random()*100000);
+        img.alt = 'Random image';
+        img.style.width = '100%';
+        img.style.marginTop = '12px';
+        area.appendChild(img);
+      }
+    });
+  </script>
+</body>
+</html>
